@@ -1,0 +1,1242 @@
+<meta name='viewport' content='width=device-width, initial-scale=1'/><!DOCTYPE html>
+<html lang="zh-HK">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>重生一步 – 你的每一天都值得慶祝 💚</title>
+    <!-- canvas-confetti -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+    <!-- Elfsight AI Chatbot -->
+    <script src="https://elfsightcdn.com/platform.js" async></script>
+
+    <!-- PWA: Inline Manifest + theme color -->
+    <script type="application/manifest+json">
+    {
+      "name": "重生一步 – 你的每一天都值得慶祝",
+      "short_name": "重生一步",
+      "description": "每日清醒打卡、心情分享、康復資源與成長小樹 💚",
+      "start_url": ".",
+      "display": "standalone",
+      "background_color": "#e0f2fe",
+      "theme_color": "#059669",
+      "orientation": "portrait-primary",
+      "icons": [
+        {
+          "src": "https://via.placeholder.com/192x192/059669/ffffff?text=🌱",
+          "sizes": "192x192",
+          "type": "image/png",
+          "purpose": "any maskable"
+        },
+        {
+          "src": "https://via.placeholder.com/512x512/059669/ffffff?text=重生",
+          "sizes": "512x512",
+          "type": "image/png",
+          "purpose": "any maskable"
+        }
+      ]
+    }
+    </script>
+    <meta name="theme-color" content="#059669">
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&display=swap');
+        body {
+            font-family: 'Noto Sans TC', sans-serif;
+            background: linear-gradient(135deg, #e0f2fe, #d1fae5);
+            color: #1e293b;
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+        }
+        .app {
+            max-width: 420px;
+            width: 100%;
+            background: white;
+            border-radius: 24px;
+            padding: 32px 24px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+            text-align: center;
+        }
+        h1 { font-size: 2.2rem; margin: 0 0 8px; color: #047857; font-weight: 700; }
+        .subtitle { color: #64748b; font-size: 1.05rem; margin-bottom: 24px; }
+        .days { font-size: 5rem; font-weight: 800; color: #059669; margin: 16px 0; line-height: 1; animation: fadeIn 1s ease; }
+        @keyframes fadeIn { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
+        .benefit { font-size: 1.1rem; color: #475569; margin: 12px 0; font-weight: 500; }
+        .benefit-line { margin: 8px 0; font-size: 1.05rem; }
+        .benefit-line strong { color: #059669; }
+        .badge { background: #fef3c7; color: #92400e; padding: 8px 16px; border-radius: 9999px; font-weight: 600; margin: 12px 0; display: inline-block; animation: pulse 2s infinite; }
+        @keyframes pulse { 0%,100% {transform:scale(1);} 50% {transform:scale(1.05);} }
+        button {
+            background: #10b981;
+            color: white;
+            border: none;
+            padding: 14px 32px;
+            margin: 12px 4px;
+            border-radius: 9999px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.25s;
+        }
+        button:hover { transform: translateY(-2px); box-shadow: 0 10px 20px rgba(16,185,129,0.3); }
+        button:disabled { background: #d1d5db; cursor: not-allowed; }
+        .reset-btn { background: #6b7280; }
+        select, input[type="date"], input[type="number"], textarea {
+            width: 100%;
+            padding: 12px;
+            margin: 12px 0;
+            border: 1px solid #d1d5db;
+            border-radius: 12px;
+            font-size: 1rem;
+            background: #f9fafb;
+        }
+        .log { 
+            background: #f8fafc; 
+            padding: 20px; 
+            border-radius: 16px; 
+            margin-top: 24px; 
+            text-align: left; 
+        }
+        .log-entry {
+            background: white;
+            padding: 16px;
+            margin-bottom: 16px;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            border-left: 6px solid #10b981;
+        }
+        .log-date { font-size: 1.2rem; font-weight: bold; color: #047857; margin-bottom: 12px; }
+        .log-item { margin-bottom: 10px; line-height: 1.5; }
+        .log-label { font-weight: 600; }
+        .quote { font-style: italic; color: #4b5563; margin: 24px 0; font-size: 1.05rem; padding: 0 20px; border-left: 4px solid #10b981; }
+        .small { font-size: 2.5rem; }
+        #growthTree img { max-width: 180px; height: auto; margin: 0 auto; display: block; transition: transform 0.3s ease; }
+        #treeStatus { font-size: 1.1rem; color: #059669; font-weight: 600; margin-top: 8px; }
+        .support-section {
+            background: #f1f5f9;
+            padding: 20px;
+            border-radius: 16px;
+            margin: 28px 0;
+        }
+        .support-section h3 { color: #dc2626; margin-bottom: 16px; }
+        .support-btn {
+            display: block;
+            background: #ef4444;
+            color: white;
+            padding: 14px;
+            margin: 10px 0;
+            border-radius: 9999px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+        .support-btn.green { background: #10b981; }
+        img.poster {
+            width: 100%;
+            max-width: 420px;
+            height: auto;
+            margin: 24px auto 16px;
+            display: block;
+            border-radius: 12px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        /* Elfsight AI 聊天泡泡固定左下角 */
+        .elfsight-app-fcef0a9e-6293-4ede-9695-db8c74539be6,
+        .elfsight-app-fcef0a9e-6293-4ede-9695-db8c74539be6 *,
+        .ef-app-fcef0a9e-6293-4ede-9695-db8c74539be6,
+        .ef-app-fcef0a9e-6293-4ede-9695-db8c74539be6 * {
+            position: fixed !important;
+            left: 20px !important;
+            right: auto !important;
+            bottom: 20px !important;
+            top: auto !important;
+            z-index: 9999 !important;
+            max-height: 70vh !important;
+            max-width: 360px !important;
+            overflow: hidden !important;
+            transform: none !important;
+        }
+        .ef-chat-button, .ef-chat-widget {
+            transform: scale(0.9) !important;
+        }
+        /* 陪伴感專用樣式 */
+        .companion-greeting {
+            background: #f0fdf4;
+            padding: 16px;
+            border-radius: 12px;
+            margin: 16px 0;
+            font-size: 1.1rem;
+            color: #059669;
+            border-left: 6px solid #10b981;
+            box-shadow: 0 4px 10px rgba(16,185,129,0.1);
+        }
+        .reason-banner {
+            background: #fef3c7;
+            color: #92400e;
+            padding: 14px 16px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            font-weight: 600;
+            font-size: 1.05rem;
+            box-shadow: 0 4px 10px rgba(146,64,14,0.1);
+        }
+        /* Modal 樣式 */
+        #assessmentModal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.85);
+            z-index: 99999;
+            justify-content: center;
+            align-items: center;
+        }
+        #assessmentContent {
+            background: white;
+            max-width: 420px;
+            width: 95%;
+            border-radius: 20px;
+            padding: 24px;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+        }
+        .assessment-q { margin: 20px 0; text-align: left; }
+        .print-btn {
+            background: #10b981;
+            color: white;
+            padding: 14px;
+            width: 100%;
+            border-radius: 9999px;
+            font-size: 1.1rem;
+            margin-top: 16px;
+            border: none;
+            cursor: pointer;
+        }
+        .medal { font-size: 1.4rem; color: #059669; }
+        /* PWA 安裝提示樣式 */
+        #installPrompt {
+            background: #f0fdf4;
+            padding: 16px;
+            border-radius: 16px;
+            margin: 24px 0;
+            border: 2px dashed #059669;
+        }
+        #installPrompt button {
+            background: #059669;
+            padding: 16px 40px;
+            font-size: 1.2rem;
+            box-shadow: 0 4px 12px rgba(5,150,105,0.3);
+        }
+    </style>
+</head>
+<body>
+    <div class="app">
+        <h1>重生一步</h1>
+        <p class="subtitle">每一天清醒，都是給自己的最好禮物 💚</p>
+        
+        <select id="substance">
+            <option value="冰毒">主要物質：冰毒</option>
+            <option value="酒精">主要物質：酒精</option>
+            <option value="海洛英">主要物質：海洛英</option>
+            <option value="K仔">主要物質：K仔</option>
+            <option value="大麻">主要物質：大麻</option>
+            <option value="止痛藥">主要物質：處方止痛藥</option>
+            <option value="依托咪酯">主要物質：依托咪酯（太空油/喪屍煙彈）</option>
+            <option value="咳藥水">主要物質：咳藥水（含可待因/右甲嗎喃）</option>
+            <option value="安眠藥">主要物質：安眠藥（處方安眠藥濫用）</option>
+            <option value="可卡因">主要物質：可卡因（Cocaine）</option>
+        </select>
+        
+        <div id="days" class="days">0 天</div>
+        <p id="lastCheckinDisplay" style="margin: 12px 0 20px; font-size: 1.05rem; color: #059669; font-weight: 600;"></p>
+
+        <div id="growthTree">
+            <img id="treeImg" src="https://cdn.dribbble.com/userupload/28408094/file/original-2d218ec59b6594f234706844c71bfba6.gif" alt="重生小樹">
+            <p id="treeStatus">你的重生小樹正在成長中... 🌱</p>
+        </div>
+        
+        <div id="benefit" class="benefit">
+            <div class="benefit-line">你已省下約 HK$<strong><span id="saved">0</span></strong> 💰</div>
+            <div class="benefit-line">預計再過1年可再省 HK$<strong><span id="year1">0</span></strong></div>
+            <div class="benefit-line">預計再過3年可再省 HK$<strong><span id="year3">0</span></strong></div>
+            <div class="benefit-line">預計再過5年可再省 HK$<strong><span id="year5">0</span></strong></div>
+            <div class="benefit-line">預計再過10年可再省 HK$<strong><span id="year10">0</span></strong></div>
+            <div style="margin-top:12px; font-size:0.9rem; color:#64748b;">身體正在修復中，未來會越來越好！</div>
+        </div>
+        
+        <label for="dailyCost">每天大約花多少錢在物質上？（HK$）</label>
+        <input type="number" id="dailyCost" min="0" step="10" value="200" placeholder="例如 200">
+        <button onclick="updateDailyCost()">更新節省金額</button>
+        
+        <div id="badge" class="badge" style="display:none;"></div>
+        
+        <label>最後使用日期</label>
+        <input type="date" id="quitDate">
+        
+        <button onclick="saveDate()">儲存 / 更新日期</button>
+        <button onclick="resetDate()" class="reset-btn">重設</button>
+        
+        <div style="margin:32px 0;">
+            <button onclick="dailyCheckin()">今日打卡（領取勉勵、戒毒知識與生活健康小貼士）</button>
+        </div>
+        
+        <div style="margin:24px 0; text-align:center;">
+            <button onclick="showAchievements()" 
+                    style="background:#059669; color:white; padding:16px 40px; border-radius:9999px; font-weight:700; font-size:1.2rem; box-shadow:0 4px 12px rgba(5,150,105,0.3);">
+                努力成就 🌱 查看你的重生成就
+            </button>
+            <button onclick="startPrePostAssessment()" 
+                    style="background:#8b5cf6; color:white; padding:14px 32px; border-radius:9999px; font-weight:700; font-size:1.05rem; margin-top:12px;">
+                📊 開始/更新 恢復資本評估（BARC-10）
+            </button>
+        </div>
+
+        <!-- PWA 安裝提示區域 -->
+        <div id="installPrompt" style="display:none;">
+            <button id="installBtn">🌱 安裝「重生一步」到主畫面</button>
+            <p style="font-size:0.95rem; color:#059669; margin-top:12px;">
+                加到手機桌面，像 App 一樣使用！離線也能打卡，隨時記錄你的重生之旅 💚
+            </p>
+        </div>
+
+        <!-- 短期目標區（支援一次新增多個） -->
+        <div id="goals-section" class="log" style="margin-top: 24px;">
+            <strong>我的7天短期目標區 🌱</strong>
+            <p style="font-size:0.9rem; color:#64748b;">可一次輸入多個目標（每行一個），每天完成一次獲得一顆 🌱，7天全完成即大勝利！（每天限一次）</p>
+            <textarea id="goalInput" placeholder="例如：每天散步30分鐘
+每天喝2公升水
+每天練習深呼吸" rows="4"></textarea>
+            <button onclick="addGoal()" style="margin-top:12px; width:100%;">新增7天目標（截止日期自動設為7天後）</button>
+            <ul id="goalList" style="list-style:none; padding:0; margin-top:16px;"></ul>
+        </div>
+        
+        <div id="logs" class="log" style="display:none;">
+            <strong>最近打卡紀錄</strong>
+            <ul id="logList" style="list-style: none; padding: 0;"></ul>
+        </div>
+
+        <div id="reasons-section" class="log" style="margin: 24px 0;">
+            <strong>我的清醒理由 💪（永久記住，為什麼要堅持）</strong>
+            <p style="font-size:0.9rem; color:#64748b;">寫下你最想清醒的理由（例如：為了媽媽、為了自由、為了不再驚醒），每次打開都會提醒自己～</p>
+            <textarea id="reasonInput" placeholder="例如：我想清醒是為了重新做回好仔女、為了有錢供樓..." rows="3"></textarea>
+            <button onclick="saveReason()">儲存理由</button>
+            <div id="savedReasons" style="margin-top:16px;"></div>
+        </div>
+
+        <div id="mood-share" class="log" style="margin-top: 24px;">
+            <strong>今日心情分享 💬（匿名個人日記）</strong>
+            <p style="font-size:0.9rem; color:#64748b;">寫下心情，點💚支持自己～（僅在本機可見）</p>
+            <textarea id="moodInput" placeholder="例如：第45日，今日第一次覺得自己正常咗..." rows="3"></textarea>
+            <button onclick="postMood()">分享心情</button>
+            <ul id="moodList" style="list-style:none; padding:0; margin-top:16px;"></ul>
+        </div>
+
+        <div class="support-section">
+            <h3>需要即時幫助？這裡有人陪你 💚</h3>
+            <p style="font-weight: bold; color: #059669; margin-bottom: 16px;">所有服務絕對保密，歡迎隨時求助。你不孤單，第一步求助就是重生的開始！</p>
+
+            <a href="tel:186186" class="support-btn">🚨 禁毒熱線 186 186 <br><small>24小時專業社工接聽，即時輔導 / 轉介</small></a>
+            <a href="https://wa.me/98186186" target="_blank" class="support-btn green">💬 WhatsApp / WeChat 98 186 186 <br><small>即時通訊諮詢（上午10時至下午8時）</small></a>
+
+            <div style="padding: 12px; background: #f8fafc; border-radius: 12px; margin-top: 8px;">
+                <ul style="list-style: none; padding: 0; margin: 0;">
+                    <li style="margin-bottom: 16px;">
+                        <strong>香港戒毒會 (SARDA)</strong><br>
+                        電話：2574 3300<br>
+                        網站：<a href="https://www.sarda.org.hk" target="_blank">www.sarda.org.hk</a><br>
+                        <small>住院康復中心、美沙酮輔導、善後服務</small>
+                    </li>
+                    <li style="margin-bottom: 16px;">
+                        <strong>東華三院越峰成長中心</strong><br>
+                        電話：2884 0282<br>
+                        網站：<a href="http://crosscentre.tungwahcsd.org" target="_blank">crosscentre.tungwahcsd.org</a><br>
+                        <small>濫用精神藥物輔導中心、多區服務</small>
+                    </li>
+                    <li style="margin-bottom: 16px;">
+                        <strong>香港基督教服務處 PS33</strong><br>
+                        尖沙咀：2368 8269 | 深水埗：3572 0673<br>
+                        網站：<a href="https://www.hkcs.org/tc/services/ps33" target="_blank">hkcs.org</a><br>
+                        <small>社區輔導，針對危害精神毒品</small>
+                    </li>
+                    <li style="margin-bottom: 16px;">
+                        <strong>醫院管理局物質誤用診所</strong><br>
+                        例子：青山醫院屯門物質濫用診療所 2456 8260 等<br>
+                        <small>精神科門診、戒毒治療、心理治療（需轉介或直接求診）</small>
+                    </li>
+                    <li>
+                        <strong>衞生署美沙酮診所</strong><br>
+                        熱線：2835 1831 / 2835 1834<br>
+                        <small>海洛英/鴉片類依賴門診維持治療</small>
+                    </li>
+                </ul>
+            </div>
+
+            <a href="https://www.nd.gov.hk/tc/list_of_major_organisations_providing_drug_treatment_and_rehabilitation_services.html" 
+               target="_blank" 
+               style="color:#059669; display:block; margin:20px 0; font-weight:600; text-align:center; font-size:1.05rem;">
+               👉 保安局禁毒處官方完整機構列表（11間輔導中心 + 多間住院服務）
+            </a>
+
+            <p style="font-size:0.9rem; color:#475569; text-align:center; margin-top:16px;">
+                資料來源：保安局禁毒處及醫院管理局（2026年更新）<br>
+                如需最新資訊，可致電186 186查詢。
+            </p>
+        </div>
+        
+        <img 
+            src="https://www.nd.gov.hk/tc/images/telephone_enquiry_poster2_v3.png" 
+            alt="禁毒電話諮詢海報 - 24小時支援" 
+            class="poster"
+        >
+        
+        <div id="quote" class="quote"></div>
+
+        <div id="story-section" class="quote" style="margin: 24px 0; border-left: 4px solid #059669; padding: 16px; background: #f0fdf4;">
+            <strong>過來人/名人分享 💬</strong><br>
+            <p id="dailyStory">載入中...</p>
+        </div>
+        
+        <p style="color:#6b7280; font-size:0.9rem; margin-top:32px;">
+            所有資料只在你手機 • 完全私隱 • 免費使用<br>
+            右下角有「精神小幫手」AI陪你聊天！隨時傾訴～ 🤖💬
+        </p>
+    </div>
+
+    <!-- BARC-10 評估 Modal -->
+    <div id="assessmentModal">
+        <div id="assessmentContent">
+            <h2 id="assessmentTitle">恢復資本評估（BARC-10）</h2>
+            <p style="color:#64748b;">這是實證驗證的10題量表（Brief Assessment of Recovery Capital），測量你的恢復資源（如支持、責任感、生活滿足）。總分10-60，**越高越好**。全部本地儲存，不會外傳。</p>
+            <form id="assessmentForm">
+                <div class="assessment-q">
+                    <p><strong>1. 對我來說，生活中比使用物質更重要的事情更多。</strong></p>
+                    <label><input type="radio" name="q1" value="1"> 1 強烈不同意</label><br>
+                    <label><input type="radio" name="q1" value="2"> 2 不同意</label><br>
+                    <label><input type="radio" name="q1" value="3"> 3 有些不同意</label><br>
+                    <label><input type="radio" name="q1" value="4"> 4 有些同意</label><br>
+                    <label><input type="radio" name="q1" value="5"> 5 同意</label><br>
+                    <label><input type="radio" name="q1" value="6"> 6 強烈同意</label>
+                </div>
+                <div class="assessment-q">
+                    <p><strong>2. 總體來說，我對自己的生活感到滿意。</strong></p>
+                    <label><input type="radio" name="q2" value="1"> 1 強烈不同意</label><br>
+                    <label><input type="radio" name="q2" value="2"> 2 不同意</label><br>
+                    <label><input type="radio" name="q2" value="3"> 3 有些不同意</label><br>
+                    <label><input type="radio" name="q2" value="4"> 4 有些同意</label><br>
+                    <label><input type="radio" name="q2" value="5"> 5 同意</label><br>
+                    <label><input type="radio" name="q2" value="6"> 6 強烈同意</label>
+                </div>
+                <div class="assessment-q">
+                    <p><strong>3. 我有足夠的精力完成自己設定的任務。</strong></p>
+                    <label><input type="radio" name="q3" value="1"> 1 強烈不同意</label><br>
+                    <label><input type="radio" name="q3" value="2"> 2 不同意</label><br>
+                    <label><input type="radio" name="q3" value="3"> 3 有些不同意</label><br>
+                    <label><input type="radio" name="q3" value="4"> 4 有些同意</label><br>
+                    <label><input type="radio" name="q3" value="5"> 5 同意</label><br>
+                    <label><input type="radio" name="q3" value="6"> 6 強烈同意</label>
+                </div>
+                <div class="assessment-q">
+                    <p><strong>4. 我為自己居住的社區感到驕傲，並覺得自己是其中一部分。</strong></p>
+                    <label><input type="radio" name="q4" value="1"> 1 強烈不同意</label><br>
+                    <label><input type="radio" name="q4" value="2"> 2 不同意</label><br>
+                    <label><input type="radio" name="q4" value="3"> 3 有些不同意</label><br>
+                    <label><input type="radio" name="q4" value="4"> 4 有些同意</label><br>
+                    <label><input type="radio" name="q4" value="5"> 5 同意</label><br>
+                    <label><input type="radio" name="q4" value="6"> 6 強烈同意</label>
+                </div>
+                <div class="assessment-q">
+                    <p><strong>5. 我從朋友那裡得到很多支持。</strong></p>
+                    <label><input type="radio" name="q5" value="1"> 1 強烈不同意</label><br>
+                    <label><input type="radio" name="q5" value="2"> 2 不同意</label><br>
+                    <label><input type="radio" name="q5" value="3"> 3 有些不同意</label><br>
+                    <label><input type="radio" name="q5" value="4"> 4 有些同意</label><br>
+                    <label><input type="radio" name="q5" value="5"> 5 同意</label><br>
+                    <label><input type="radio" name="q5" value="6"> 6 強烈同意</label>
+                </div>
+                <div class="assessment-q">
+                    <p><strong>6. 我認為自己的生活充滿挑戰且有意義，而不需要使用毒品或酒精。</strong></p>
+                    <label><input type="radio" name="q6" value="1"> 1 強烈不同意</label><br>
+                    <label><input type="radio" name="q6" value="2"> 2 不同意</label><br>
+                    <label><input type="radio" name="q6" value="3"> 3 有些不同意</label><br>
+                    <label><input type="radio" name="q6" value="4"> 4 有些同意</label><br>
+                    <label><input type="radio" name="q6" value="5"> 5 同意</label><br>
+                    <label><input type="radio" name="q6" value="6"> 6 強烈同意</label>
+                </div>
+                <div class="assessment-q">
+                    <p><strong>7. 我的居住環境有助推動我的恢復之旅。</strong></p>
+                    <label><input type="radio" name="q7" value="1"> 1 強烈不同意</label><br>
+                    <label><input type="radio" name="q7" value="2"> 2 不同意</label><br>
+                    <label><input type="radio" name="q7" value="3"> 3 有些不同意</label><br>
+                    <label><input type="radio" name="q7" value="4"> 4 有些同意</label><br>
+                    <label><input type="radio" name="q7" value="5"> 5 同意</label><br>
+                    <label><input type="radio" name="q7" value="6"> 6 強烈同意</label>
+                </div>
+                <div class="assessment-q">
+                    <p><strong>8. 我對自己的行為完全負責。</strong></p>
+                    <label><input type="radio" name="q8" value="1"> 1 強烈不同意</label><br>
+                    <label><input type="radio" name="q8" value="2"> 2 不同意</label><br>
+                    <label><input type="radio" name="q8" value="3"> 3 有些不同意</label><br>
+                    <label><input type="radio" name="q8" value="4"> 4 有些同意</label><br>
+                    <label><input type="radio" name="q8" value="5"> 5 同意</label><br>
+                    <label><input type="radio" name="q8" value="6"> 6 強烈同意</label>
+                </div>
+                <div class="assessment-q">
+                    <p><strong>9. 我樂於與各種專業人士打交道。</strong></p>
+                    <label><input type="radio" name="q9" value="1"> 1 強烈不同意</label><br>
+                    <label><input type="radio" name="q9" value="2"> 2 不同意</label><br>
+                    <label><input type="radio" name="q9" value="3"> 3 有些不同意</label><br>
+                    <label><input type="radio" name="q9" value="4"> 4 有些同意</label><br>
+                    <label><input type="radio" name="q9" value="5"> 5 同意</label><br>
+                    <label><input type="radio" name="q9" value="6"> 6 強烈同意</label>
+                </div>
+                <div class="assessment-q">
+                    <p><strong>10. 我在恢復之旅上進展良好。</strong></p>
+                    <label><input type="radio" name="q10" value="1"> 1 強烈不同意</label><br>
+                    <label><input type="radio" name="q10" value="2"> 2 不同意</label><br>
+                    <label><input type="radio" name="q10" value="3"> 3 有些不同意</label><br>
+                    <label><input type="radio" name="q10" value="4"> 4 有些同意</label><br>
+                    <label><input type="radio" name="q10" value="5"> 5 同意</label><br>
+                    <label><input type="radio" name="q10" value="6"> 6 強烈同意</label>
+                </div>
+                <div style="margin-top:24px;">
+                    <button type="button" onclick="submitAssessment()" class="print-btn">提交評估</button>
+                </div>
+            </form>
+            <button onclick="closeAssessmentModal()" style="background:#6b7280; color:white; margin-top:12px; padding:12px; width:100%; border-radius:9999px;">取消</button>
+        </div>
+    </div>
+
+    <!-- Elfsight AI Chatbot -->
+    <div class="elfsight-app-fcef0a9e-6293-4ede-9695-db8c74539be6" data-elfsight-app-lazy></div>
+
+    <script>
+        let quitDate = localStorage.getItem('quitDate');
+        let logs = JSON.parse(localStorage.getItem('checkinLogs')) || [];
+        let dailyCost = parseInt(localStorage.getItem('dailyCost')) || 200;
+        let moodShares = JSON.parse(localStorage.getItem('moodShares')) || [];
+        let reasons = JSON.parse(localStorage.getItem('sobrietyReasons')) || [];
+        let preAssessment = JSON.parse(localStorage.getItem('preAssessment')) || null;
+        let postAssessments = JSON.parse(localStorage.getItem('postAssessments')) || [];
+        let lastCheckinTime = localStorage.getItem('lastCheckinTime') || null;
+        let shortTermGoals = JSON.parse(localStorage.getItem('shortTermGoals')) || [];
+
+        // PWA 安裝相關變數
+        let deferredPrompt = null;
+
+        document.getElementById('dailyCost').value = dailyCost;
+
+        const encouragementQuotes = [
+            "每一天不碰，都是給自己最好的禮物！堅持下去，你值得更好的自己。",
+            "今天又贏了一次，恭喜你！你正在重建屬於自己的力量。",
+            "復發不是結束，而是學習的機會。繼續前進，你比想像中堅強。",
+            "清醒的每一天，都在讓大腦慢慢修復，未來會越來越清晰明亮。",
+            "你不是孤單的，香港有很多人和你一起走這條路。一步一步來。",
+            "身體正在感謝你：肝臟在修復、睡眠在改善、精力在回來。",
+            "選擇清醒，就是選擇自由。今天的你，比昨天更接近真實的自己。",
+            "小勝利累積成大改變。繼續打卡，你正在寫自己的重生故事。",
+            "跌倒七次，站起來八次。這就是你的力量。",
+            "每一天清醒，都是對過去的自己最好的道歉。",
+            "你不是在戒毒，你是在重生。繼續前進！",
+            "今天的你，比昨天更強壯。明天會更好。",
+            "不要害怕慢，只要不停止。",
+            "清醒的日子，像積木，一塊一塊築起新人生。",
+            "你值得被愛、被珍惜、被看見。從今天開始。",
+            "每一次拒絕誘惑，都是給未來的自己一個擁抱。",
+            "改變從不舒服開始，但不改變永遠不舒服。",
+            "你已經走過最難的部分：決定開始。現在堅持下去。",
+            "每一天不碰，都是投資在更好的明天。",
+            "清醒不是終點，而是新旅程的起點。加油！"
+        ];
+
+        const companionMessages = [
+            "Hey，我知道今日可能好攰，但你已經走咗咁遠，我好驕傲你。 – 你的重生小夥伴",
+            "記得上次你堅持過難關？今次都一樣，我信你！",
+            "孤單嘅時候，就當我喺度陪你傾計啦～ 💬",
+            "今日無論點，都唔好放棄自己。你值得更好嘅人生。",
+            "過來人話：最難嘅頭30日過咗，之後會越來越輕鬆。加油！",
+            "我一直喺度陪住你，每一步我都睇到。繼續行落去啦！",
+            "今日又係新一天，呼吸一口新鮮空氣，感覺自己好勇敢。",
+            "你唔孤單，我同好多同路人一齊喺度支持你 💚"
+        ];
+
+        const benefitsBySubstance = { 
+            "冰毒": ["大腦多巴胺受體逐步恢復，心情更穩定、情緒波動減少。","幻覺與偏執症狀大幅減輕，思維更清晰、現實感回歸。","衝動控制與決策能力提升，人生選擇更理性。","牙齒、皮膚損傷逐步修復，體重與代謝趨向健康。","神經毒性影響減輕，記憶力與情緒調節能力明顯改善。","注意力與認知清晰度回升，大腦霧感消失。","強烈渴望強度逐漸降低，心智更自由。","長期清醒後，社交圈重建，真正朋友回歸，孤獨感大幅減少。","心理韌性提升，面對壓力時更有能力用健康方式應對。"],
+            "酒精": ["睡眠品質大幅改善，焦慮與夜間驚醒減少。","肝酵素下降，脂肪肝部分逆轉，肝臟功能回升。","大腦灰質體積增加，認知與記憶力更清晰。","胰臟炎、心肌病風險降低，血壓與心率更穩定。","癌症風險逐漸下降，整體壽命預期提升。","心臟負擔減輕，心律不整風險下降。"],
+            "海洛英": ["腸胃功能恢復，便秘與腹瀉問題緩解。","免疫系統重建，感染風險大幅降低。","荷爾蒙系統平衡，性功能與月經逐步正常。","靜脈損傷癒合，血管系統健康改善。","大腦獎賞系統重新校準，生活動機與快樂感回歸。"],
+            "K仔": ["膀胱與泌尿系統炎症減輕，排尿疼痛緩解。","認知混亂與記憶缺損改善，注意力集中力回升。","膀胱容量與功能逐步恢復，泌尿系統更正常。","精神分裂樣症狀減輕，大腦白質損傷緩慢修復。","記憶與注意力回歸正常水平。"],
+            "大麻": ["睡眠更深沉穩定，夢境雖增加但整體休息更好。","短期記憶與學習能力恢復，動機感提升。","肺部纖毛功能改善，呼吸道症狀減輕。","大腦海馬體與杏仁核功能正常化，焦慮與偏執傾向降低。"],
+            "止痛藥": ["腸道蠕動恢復正常，嚴重便秘問題緩解。","內分泌系統平衡，性慾與月經週期逐步正常。","痛覺敏感度正常化，自然疼痛控制能力提升。","肝腎功能負擔減輕，器官健康改善。"],
+            "依托咪酯": ["呼吸抑制風險下降，肺部感染機會降低。","協調性與平衡感改善，跌倒風險減少。","大腦GABA受體功能恢復，焦慮與驚恐發作減少。","記憶與認知損傷部分逆轉，思維更清晰。"],
+            "咳藥水": ["腸胃道症狀緩解，消化系統更舒服。","呼吸道黏膜修復，慢性咳嗽與痰量減少。","肝臟負擔減輕，酵素值趨向正常。","情緒波動與易怒情況改善，心情更穩定。"],
+            "安眠藥": ["入睡時間縮短，自然睡眠品質提升。","日間嗜睡與認知遲緩明顯改善，白天更清醒。","GABA受體敏感度正常化，記憶與注意力回升。","依賴性降低，自然睡眠週期重建。"],
+            "可卡因": ["心血管過度興奮狀態緩解，心率與血壓穩定。","鼻腔黏膜損傷癒合，呼吸道功能正常。","多巴胺受體密度恢復，強烈渴望強度下降。","心臟負擔減輕，中風與心肌梗塞風險大幅降低。"]
+        };
+
+        const levelEncouragements = { 
+            newbie: ["第一步最難，但你已經跨出去了！每一天都在變強。","戒斷初期最辛苦，堅持住，風暴過後就是彩虹。","今天不碰，就是給自己的一場小勝利。很棒！","身體正在適應變化，難受是暫時的，自由是永遠的。"],
+            starter: ["第一週完成！你已經證明自己有能力掌控人生。","每天都在累積力量，現在的你比一週前強大太多。","渴望還在，但你一次次戰勝它，太厲害了！"],
+            stable: ["一個月了！你正在進入穩定階段，生活開始回歸正常。","大腦獎賞系統在慢慢重設，好日子越來越近。","你已經習慣不靠物質也能快樂，這是巨大進步。"],
+            milestone: ["90天里程碑！你做到了很多人覺得不可能的事。","現在的你，已經重新找回很多失去的東西。","每一天都在證明：你真的可以活出更好的自己。"],
+            halfyear: ["半年勇士！看看你走過多遠，未來只會更好。","很多人這時候已經完全重生，你也快到了。","清醒成為你的新常態，恭喜你奪回人生主導權。"],
+            longterm: ["一年重生傳奇！你已經徹底改寫人生劇本。","現在的你，是很多人的榜樣。繼續閃耀吧！","清醒不再是努力，而是你真實的生活方式。驕傲自己。","多年後回望，這段路係你最勇敢的決定。 – 繼續前行！","從毒海走出，現在你幫到其他人，這係最大回報。"]
+        };
+
+        const lifeHealthTips = [ 
+            "每天喝足2公升水，有助排毒、改善皮膚與提升代謝。",
+            "每晚維持7-9小時優質睡眠，能加速大腦與身體修復。",
+            "每天散步30分鐘，可提升心情、降低壓力與改善心肺功能。",
+            "多吃蔬果與優質蛋白（如雞胸、豆腐、魚），有助肝腎排毒與肌肉修復。",
+            "練習深呼吸或5分鐘冥想，能有效降低焦慮與渴望衝動。",
+            "避免咖啡因與高糖飲食，穩定血糖有助減少情緒波動。",
+            "每週至少3次簡單伸展或瑜伽，可緩解肌肉緊繃與提升柔軟度。",
+            "與信任的朋友或家人分享感受，能減輕孤獨感與提升堅持動力。",
+            "每天早起曬10–15分鐘太陽，幫助調節生理時鐘，提升心情。",
+            "練習5分鐘感恩日記：寫3件今天感恩的事，減低負面情緒。",
+            "每晚睡前避免手機藍光1小時，改善睡眠質素。",
+            "每天深呼吸練習：吸4秒、停4秒、呼6秒，重複10次，快速平靜焦慮。",
+            "每週試下新興趣（如畫畫、行山、煮飯），讓大腦重新發現非物質快樂。",
+            "加入本地互助群組或義工活動，重建正向社交，減少孤單觸發渴望。",
+            "定期體檢（肝腎功能、精神科跟進），及早發現問題更有安全感。",
+            "練習『自我慈悲』：對自己說『我已經好努力，繼續加油』，減低自責。"
+        ];
+
+        const relapsePreventionTips = [ 
+            "建立「高風險情境清單」：記下容易觸發渴望的時間、地點、人事物，提前避開或準備應對計劃。",
+            "練習「HALT」檢查：餓了（Hungry）、生氣（Angry）、孤單（Lonely）、疲倦（Tired）時，先解決這些基本需求再做決定。",
+            "每天花5分鐘回顧「清醒的好處」：寫下今天清醒帶來的正面改變，強化動機。",
+            "準備「緊急應對卡」：手機裡存幾句有力話語（如「我值得自由」「這一刻會過去」），渴望來時馬上讀出來。",
+            "找一位「責任夥伴」：信任的朋友或社工，定期報告進度，有人監督會更有力量。",
+            "改變日常路線：避開舊環境、舊朋友圈，刻意走新路、去新地方，打破習慣循環。",
+            "練習「延遲滿足」：當渴望出現時，告訴自己「等15分鐘再決定」，大多數衝動會自然消退。",
+            "參加互助會議或線上群組：香港有不少匿名戒癮聚會，聽別人故事能減輕孤獨感。",
+            "培養替代快樂來源：運動、聽音樂、玩遊戲、煮飯等，讓大腦慢慢習慣非物質的愉悅。",
+            "記住「復發不是世界末日」：如果滑倒，分析原因、原諒自己，然後立刻重新開始。",
+            "建立每日例行公事：固定作息、運動、進食時間，讓生活有結構，減少空檔產生衝動。",
+            "練習深呼吸或正念冥想：當負面情緒上升時，專注呼吸 1-2 分鐘，幫助大腦冷靜下來。",
+            "設定小而可達成的目標：如「今天走 5000 步」或「完成一項家務」，達成後自我獎勵（非物質）。",
+            "避免「表面無關的決定」：如突然改變路線去舊區，或借錢給舊友，這些往往是潛在復吸警號。",
+            "定期複盤情緒日記：每天寫下當天情緒與誘因，及早發現模式並調整應對方式。",
+            "強化社交支持：主動聯絡家人或康復朋友，分享感受，避免孤單成為觸發點。",
+            "學習拒絕技巧：預先練習說「不」的句子，如「我現在在康復，不想再碰」，面對邀約時更有自信。",
+            "參與社區活動或義工：加入本地康復團體、運動班或義工服務，重建正向社交圈與成就感。",
+            "管理壓力來源：識別工作/家庭壓力點，提前用健康方式（如散步、聽歌）釋放，避免累積到爆發。",
+            "每年回顧進度：每逢里程碑（如半年、一年）慶祝清醒天數，提醒自己走過多遠，強化長期動力。",
+            "當舊友聯絡時，預先想好回覆：『多謝關心，我現在專注康復，暫時唔方便見面』。",
+            "下載禁毒App或每日提醒自己『清醒理由』，手機桌面放家人相片。",
+            "壓力大時，先做5分鐘運動或打電話畀責任夥伴，唔好自己硬撐。",
+            "慶祝小成就：每個月買件小禮物畀自己（非物質相關），強化正面循環。"
+        ];
+
+        const recoveryStories = [
+            "第365天，我終於敢照鏡，皮膚好返，笑容都真誠咗。以前覺得自己廢，現在覺得自己值得被愛。 – 匿名康復者",
+            "戒咗冰毒後，大腦霧感慢慢散，第一次覺得『正常』係咁舒服。堅持住，你會發現生活原來有咁多顏色！ – 過來人分享",
+            "我曾經日日索K，膀胱痛到喊，但戒咗後，排尿正常，終於敢飲多啲水。身體感謝你每一天不碰。 – 香港康復者",
+            "媽媽從未放棄我，即使我做咗好多錯事。佢嘅堅持，讓我醒覺要為家人改變。母愛係最大動力。 – 阿佑的故事",
+            "戒毒後，我返工、照顧仔女，生活雖然平凡，但好踏實。以前覺得無未來，現在每一天都係新開始。 – 單親媽媽康復者",
+            "香港歌手鄭中基公開講自己有抑鬱同酒癮，決定求醫戒酒。佢話：『為了女兒，我要健康。』名人都有掙扎，你唔孤單。",
+            "我吸毒30年，高峰期日花千幾蚊，試過偷竊、入獄4次。但46歲嗰陣，我決定重生，現在幫同路人。 – Nana的故事",
+            "以前覺得『玩得醒目就無事』，但慢慢身體出事，先知毒品係計時炸彈。及早停手，未來選擇多咗好多。 – 青少年康復者",
+            "入咗戒毒中心，社工同家人支持我學返書、搵工。現在我做朋輩輔導員，幫其他人。從受害者變成幫助者，好有意義。 – 阿亮的故事",
+            "毒品讓我失去一切，但戒咗後，我重新學識愛自己、愛家人。清醒唔係終點，而係新旅程嘅起點。 – 匿名過來人",
+            "非華裔朋友分享：喺香港語言不通，但戒毒會社工陪我一步步走過。現在我做義工，回饋社區。 – 『有戒無類』故事",
+            "以前覺得吸毒係娛樂，後來變成生活麻醉品。戒咗後，先知真正快樂唔需要靠物質。 – 香港青年康復者",
+            "20年吸毒，花光800萬家財，試過數十次失敗戒毒。最後靠信仰同社工支持，重生後每日去廟街派早餐畀露宿者，話：『我經歷過你的痛』。 – Raymond的故事",
+            "吸毒10年，人生98%畀毒品佔據。戒咗之後，先知要填返個窿：搵工、學新技能、離開舊圈子。現在穩定工作，唔再返轉頭。 – 阿風的忠告",
+            "16歲開始吸依托咪酯（太空油），被捕後入住院式戒毒中心。8個月後，重拾書本，計劃讀VTC高級文憑。以前活在井底，現在終於見到天光。 – 阿思的逆轉",
+            "做單親媽媽，吸毒逃避痛苦，差點失去孩子。為了仔女，決心戒毒，現在帶住三個小朋友參加活動，笑聲充滿屋企。母愛係最大力量。 – Soso的分享",
+            "吸K仔到膀胱痛、精神分裂樣症狀。戒咗後，排尿正常，生活回歸。以前覺得無未來，現在做義工幫人。 – 香港康復者的感恩",
+            "從15歲誤入歧途，吸毒入獄、出入監房多次。最後上石鼓洲戒毒島，自學11年變社工。現在用自己經歷，幫同路人走出鬼門關。 – 阿輝的重生",
+            "吸毒多年，家人傷心欲絕。父親一句『養不教，父之過』，令我痛哭流涕。為了家人堅持戒毒，現在做朋輩輔導，用生命影響生命。 – 鄭卓謙的故事",
+            "富二代吸毒到家庭破碎，欠債被追。入戒毒中心後，重新學識珍惜家人。現在幫爸爸事業，爸爸哽咽話：『毒品害人不淺，幸好有專業幫助』。 – 偉哲的後悔與感恩",
+            "吸毒18年，一次吸毒一生戒毒。最後靠晨曦島支持，成功戒掉。現在有工有家，證明人生有希望。 – 林甘冠的勸告",
+            "吸毒導致朋友跳樓、自己差點沒命。父親的愛喚醒我，入村戒毒後參加課程，現在做社工，讀書進修。 – 過來人轉化故事",
+            "單親媽媽吸毒，孩子見到針頭追喊『爸爸不要去』。為了孩子，堅持戒毒10年。現在家庭完整，生活踏實。 – 單親媽媽的堅持",
+            "吸毒到精神病發，被綁住送院。康復後，熱心服務社區，成為朋輩中堅。以前幽谷經驗，現在變成幫助他人的力量。 – 熊仔的轉變",
+            "毒齡10年，欺詐、違法賺快錢。父母兩年風雨無阻參加家長組，感動我改變。現在做義工，服務新成員。 – 阿臣的家人力量",
+            "吸毒多年，失去一切。戒咗後，重學愛自己、愛家人。清醒不是終點，而是新旅程起點。 – 匿名過來人",
+            "以前覺得吸毒係娛樂，後來變麻醉品。戒咗後，先知真正快樂唔需要靠物質。 – 香港青年康復者"
+        ];
+
+        const peerReplies = [
+            "兄弟/姊妹，今日又贏咗！好勁！",
+            "見到你堅持，真係好感動～繼續行落去啦！",
+            "我都試過最辛苦嗰陣，撐過去就係新開始。你唔孤單。",
+            "你今日又比昨天強大咗，我一直喺度陪住你 💚",
+            "好驕傲你！每一步都係勝利，繼續加油！"
+        ];
+
+        function getLevel(diffDays) {
+            if (diffDays >= 365) return 'longterm';
+            if (diffDays >= 180) return 'halfyear';
+            if (diffDays >= 90) return 'milestone';
+            if (diffDays >= 30) return 'stable';
+            if (diffDays >= 7) return 'starter';
+            return 'newbie';
+        }
+
+        function triggerConfetti(days) {
+            const isMobile = window.innerWidth < 768;
+            const base = isMobile ? 60 : 100;
+            const colors = ['#10b981', '#059669', '#047857', '#34d399', '#6ee7b7', '#ffffff', '#fef3c7', '#fbbf24'];
+            if (days >= 7) confetti({ particleCount: base, spread: 60, origin: { y: 0.7 }, colors });
+            if (days >= 30) confetti({ particleCount: base * 1.5, spread: 70, origin: { y: 0.6 }, colors });
+            if (days >= 90) confetti({ particleCount: base * 2.5, spread: 80, origin: { y: 0.6 }, colors });
+            if (days >= 365) {
+                confetti({ particleCount: base * 3, spread: 100, origin: { y: 0.6 }, colors });
+                setTimeout(() => confetti({ particleCount: base * 2.5, spread: 120, origin: { y: 0.4 }, colors }), 300);
+            }
+        }
+
+        function updateDays() {
+            if (!quitDate) return;
+            const diffDays = Math.floor((Date.now() - new Date(quitDate)) / 86400000);
+            document.getElementById('days').textContent = diffDays + " 天";
+            document.getElementById('saved').textContent = (diffDays * dailyCost).toLocaleString();
+            document.getElementById('year1').textContent = (365 * dailyCost).toLocaleString();
+            document.getElementById('year3').textContent = (1095 * dailyCost).toLocaleString();
+            document.getElementById('year5').textContent = (1825 * dailyCost).toLocaleString();
+            document.getElementById('year10').textContent = (3650 * dailyCost).toLocaleString();
+
+            const badgeEl = document.getElementById('badge');
+            let badgeText = "";
+            if (diffDays >= 365) badgeText = "🏆 一年重生傳奇！🎉";
+            else if (diffDays >= 180) badgeText = "🌟 半年勇士！🎉";
+            else if (diffDays >= 90) badgeText = "🔥 90天不簡單，你做到了！🎉";
+            else if (diffDays >= 30) badgeText = "🎖️ 一個月里程碑！🎉";
+            else if (diffDays >= 7) badgeText = "💪 第一週完成，太棒！🎉";
+
+            if (badgeText) {
+                badgeEl.textContent = badgeText;
+                badgeEl.style.display = "inline-block";
+                triggerConfetti(diffDays);
+            } else {
+                badgeEl.style.display = "none";
+            }
+
+            updateTree(diffDays);
+        }
+
+        function updateTree(diffDays) {
+            const stages = [
+                {d:0, src:"https://cdn.dribbble.com/userupload/28408094/file/original-2d218ec59b6594f234706844c71bfba6.gif", txt:"剛起步！小芽破土中 💚"},
+                {d:7, src:"https://i.pinimg.com/originals/18/42/81/184281f0fe87517a950beb8112c308dd.gif", txt:"第一週！小樹開始伸展～"},
+                {d:30, src:"https://i.pinimg.com/originals/18/42/81/184281f0fe87517a950beb8112c308dd.gif", txt:"穩定成長中 🌿"},
+                {d:90, src:"https://i.pinimg.com/originals/8c/05/8a/8c058a38e30c237a4c687b7122c75076.gif", txt:"一個月啦！枝葉茂盛 🌳"},
+                {d:365, src:"https://i.pinimg.com/originals/b0/f6/c0/b0f6c01b567453917292e60eab4c62b5.gif", txt:"90天+！開始開花結果 🎉"},
+                {d:Infinity, src:"https://i.pinimg.com/originals/fb/54/16/fb5416873a8b419858a7175f05b61b60.gif", txt:"一年重生！大樹參天 🌲💚"}
+            ];
+            const stage = stages.find(s => diffDays < s.d) || stages[stages.length-1];
+            const img = document.getElementById('treeImg');
+            if (img.src !== stage.src) img.src = stage.src;
+            document.getElementById('treeStatus').textContent = stage.txt;
+        }
+
+        function renderLastCheckin() {
+            const el = document.getElementById('lastCheckinDisplay');
+            if (!el) return;
+            if (!lastCheckinTime) {
+                el.textContent = "尚未打卡";
+            } else {
+                const dateObj = new Date(lastCheckinTime);
+                const formatted = dateObj.toLocaleString('zh-HK', {
+                    year: 'numeric',
+                    month: '2-digit',
+                    day: '2-digit',
+                    hour: '2-digit',
+                    minute: '2-digit',
+                    hour12: false
+                }).replace(/\//g, '-');
+                el.textContent = `最後打卡：${formatted}`;
+            }
+        }
+
+        function showDailyGreeting() {
+            const hour = new Date().getHours();
+            let msg = "早安！今天又是新的一天，一起加油💚";
+            if (hour >= 18) msg = "晚安～今天你又堅持過來了，好驕傲你！明天見🌙";
+            else if (hour >= 12) msg = "下午好！無論今日點，都記得你唔孤單，有人陪你。";
+            
+            const greeting = document.createElement('div');
+            greeting.className = 'companion-greeting';
+            greeting.innerHTML = `<strong>你的重生小夥伴話：</strong><br>${msg}`;
+            document.querySelector('.app').insertBefore(greeting, document.getElementById('quote'));
+        }
+
+        function showDailyReason() {
+            if (reasons.length > 0) {
+                const randomReason = reasons[Math.floor(Math.random() * reasons.length)].text;
+                const reasonBanner = document.createElement('div');
+                reasonBanner.className = 'reason-banner';
+                reasonBanner.innerHTML = `💪 今日提醒自己：${randomReason}`;
+                document.querySelector('h1').after(reasonBanner);
+            }
+        }
+
+        function dailyCheckin() {
+            const todayStr = new Date().toLocaleDateString('zh-HK');
+            if (logs.length && logs[0].date === todayStr) return alert("今天已經打卡過了！明天再來～");
+            if (!quitDate) return alert("請先設定最後使用日期");
+
+            const substance = document.getElementById('substance').value;
+            const diffDays = Math.floor((Date.now() - new Date(quitDate)) / 86400000);
+            const level = getLevel(diffDays);
+            const enc = levelEncouragements[level][Math.floor(Math.random() * levelEncouragements[level].length)];
+            const benefit = benefitsBySubstance[substance][Math.floor(Math.random() * benefitsBySubstance[substance].length)];
+            const lifeTip = lifeHealthTips[Math.floor(Math.random() * lifeHealthTips.length)];
+            const relapseTip = relapsePreventionTips[Math.floor(Math.random() * relapsePreventionTips.length)];
+
+            logs.unshift({ date: todayStr, days: diffDays, enc, benefit, lifeTip, relapseTip, substance });
+            if (logs.length > 7) logs.pop();
+            localStorage.setItem('checkinLogs', JSON.stringify(logs));
+
+            lastCheckinTime = new Date().toISOString();
+            localStorage.setItem('lastCheckinTime', lastCheckinTime);
+            renderLastCheckin();
+
+            renderLogs();
+            updateDays();
+            triggerConfetti(diffDays);
+            showRandomStory();
+
+            const peerReply = peerReplies[Math.floor(Math.random() * peerReplies.length)];
+            alert(`今日打卡成功！（第 ${diffDays} 天）\n\n級別： \( {level}\n\n每日勉勵：\n \){enc}\n\n戒毒知識：\n\( {benefit}\n\n生活健康小貼士：\n \){lifeTip}\n\n預防重吸技巧：\n${relapseTip}\n\n朋輩心聲： ${peerReply}\n\n繼續加油，你正在變得更好！🌱`);
+        }
+
+        function renderLogs() {
+            const list = document.getElementById('logList');
+            list.innerHTML = "";
+            if (!logs.length) {
+                document.getElementById('logs').style.display = "none";
+                return;
+            }
+            document.getElementById('logs').style.display = "block";
+            logs.forEach(log => {
+                const div = document.createElement('div');
+                div.className = 'log-entry';
+                div.innerHTML = `
+                    <div class="log-date">${log.date} （第 ${log.days} 天）</div>
+                    <div class="log-item"><span class="log-label" style="color:#059669;">每日勉勵：</span> ${log.enc}</div>
+                    <div class="log-item"><span class="log-label" style="color:#dc2626;">戒毒知識：</span> ${log.benefit}</div>
+                    <div class="log-item"><span class="log-label" style="color:#3b82f6;">生活健康小貼士：</span> ${log.lifeTip}</div>
+                    <div class="log-item"><span class="log-label" style="color:#8b5cf6;">預防重吸技巧：</span> ${log.relapseTip}</div>
+                `;
+                list.appendChild(div);
+            });
+        }
+
+        function postMood() {
+            const text = document.getElementById('moodInput').value.trim();
+            if (!text) return alert("寫啲嘢先啦～ 😊");
+            if (text.length > 100) return alert("短啲啦，100字以內～");
+
+            moodShares.unshift({
+                text,
+                date: new Date().toLocaleDateString('zh-HK'),
+                supports: 0
+            });
+            if (moodShares.length > 50) moodShares.pop();
+
+            localStorage.setItem('moodShares', JSON.stringify(moodShares));
+            document.getElementById('moodInput').value = '';
+            renderMoods();
+            alert("分享成功！自己點💚支持自己～");
+        }
+
+        function supportMood(index) {
+            if (moodShares[index]) {
+                moodShares[index].supports++;
+                localStorage.setItem('moodShares', JSON.stringify(moodShares));
+                renderMoods();
+                confetti({ particleCount: 80, spread: 70, origin: { y: 0.6 } });
+                alert("你剛剛支持咗自己！💚 好值得被愛～");
+            }
+        }
+
+        function renderMoods() {
+            const list = document.getElementById('moodList');
+            list.innerHTML = '';
+            moodShares.slice(0, 10).forEach((share, index) => {
+                const li = document.createElement('li');
+                li.className = 'log-entry';
+                li.style.borderLeft = '6px solid #3b82f6';
+                li.innerHTML = `
+                    <div class="log-date">${share.date}</div>
+                    <div class="log-item">${share.text}</div>
+                    <button onclick="supportMood(${index})" style="background:#10b981; color:white; border:none; padding:6px 12px; border-radius:999px; cursor:pointer;">
+                        💚 支持 (${share.supports})
+                    </button>
+                `;
+                list.appendChild(li);
+            });
+        }
+
+        function randomQuote() {
+            const randomIndex = Math.floor(Math.random() * companionMessages.length);
+            document.getElementById('quote').textContent = companionMessages[randomIndex];
+        }
+
+        function saveReason() {
+            const text = document.getElementById('reasonInput').value.trim();
+            if (!text) return alert("寫啲嘢先啦～ 😊");
+            if (text.length > 150) return alert("短啲啦，150字以內～");
+
+            reasons.push({
+                text,
+                date: new Date().toLocaleDateString('zh-HK')
+            });
+            if (reasons.length > 10) reasons.shift();
+
+            localStorage.setItem('sobrietyReasons', JSON.stringify(reasons));
+            document.getElementById('reasonInput').value = '';
+            renderReasons();
+            alert("理由已儲存！每次開頁都會提醒你～ 💚");
+        }
+
+        function renderReasons() {
+            const container = document.getElementById('savedReasons');
+            container.innerHTML = '';
+            if (reasons.length === 0) {
+                container.innerHTML = '<p style="color:#64748b;">暫時未有清醒理由，寫低先支持自己！</p>';
+                return;
+            }
+            reasons.forEach((r) => {
+                const div = document.createElement('div');
+                div.className = 'log-entry';
+                div.style.borderLeft = '6px solid #059669';
+                div.innerHTML = `
+                    <div class="log-date">${r.date}</div>
+                    <div class="log-item">${r.text}</div>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        function showRandomStory() {
+            const randomIndex = Math.floor(Math.random() * recoveryStories.length);
+            document.getElementById('dailyStory').textContent = recoveryStories[randomIndex];
+        }
+
+        function updateDailyCost() {
+            const newCost = parseInt(document.getElementById('dailyCost').value) || 0;
+            if (newCost < 0) return alert("金額不能小於 0");
+            dailyCost = newCost;
+            localStorage.setItem('dailyCost', dailyCost);
+            updateDays();
+            alert("每日節省金額已更新為 HK$" + dailyCost + "！");
+        }
+
+        function saveDate() {
+            const input = document.getElementById('quitDate').value;
+            if (!input) return alert("請選擇日期");
+            quitDate = input;
+            localStorage.setItem('quitDate', quitDate);
+            updateDays();
+            alert("日期已儲存！繼續加油～ 💪");
+
+            // 如果有 deferredPrompt，顯示安裝按鈕
+            if (deferredPrompt) {
+                document.getElementById('installPrompt').style.display = 'block';
+            }
+        }
+
+        function resetDate() {
+            if (confirm("確定要重設日期嗎？所有進度會清空，包括前後評估。")) {
+                localStorage.clear();
+                location.reload();
+            }
+        }
+
+        function startPrePostAssessment() {
+            if (!quitDate) return alert("請先設定最後使用日期");
+            document.getElementById('assessmentTitle').textContent = preAssessment ? "進行 Post 評估（比較進度）" : "開始 Pre 評估（基線）";
+            document.getElementById('assessmentModal').style.display = 'flex';
+        }
+
+        function submitAssessment() {
+            const form = document.getElementById('assessmentForm');
+            const radios = form.querySelectorAll('input[type="radio"]:checked');
+            if (radios.length < 10) return alert("請完成所有10題～");
+
+            let score = 0;
+            radios.forEach(r => score += parseInt(r.value));
+
+            const today = new Date().toLocaleDateString('zh-HK');
+            const entry = { date: today, score: score, days: Math.floor((Date.now() - new Date(quitDate)) / 86400000) };
+
+            if (!preAssessment) {
+                localStorage.setItem('preAssessment', JSON.stringify(entry));
+                preAssessment = entry;
+                alert(`Pre 評估完成！基線分數：${score} / 60（越高越好，表示恢復資源越強）`);
+            } else {
+                postAssessments.push(entry);
+                localStorage.setItem('postAssessments', JSON.stringify(postAssessments));
+                const improvement = score - preAssessment.score;
+                let msg = improvement > 0 ? `+\( {improvement} 分改善 💚` : (improvement < 0 ? ` \){improvement} 分（需關注）⚠️` : "維持不變");
+                alert(`Post 評估完成！本次分數：${score} / 60\n與 Pre 比較： ${msg}`);
+                if (improvement > 0) confetti({ particleCount: 100, spread: 70 });
+            }
+            closeAssessmentModal();
+        }
+
+        function closeAssessmentModal() {
+            document.getElementById('assessmentModal').style.display = 'none';
+        }
+
+        function showAchievements() {
+            if (!quitDate) {
+                alert("請先設定最後使用日期，開始你的重生旅程 🌱");
+                return;
+            }
+
+            const diffDays = Math.floor((Date.now() - new Date(quitDate)) / 86400000);
+            const savedMoney = (diffDays * dailyCost).toLocaleString();
+            const substance = document.getElementById('substance').value;
+            const checkinCount = logs.length;
+
+            let message = `🌱 你的重生成就報告 🌱\n\n`;
+            message += `目前清醒：${diffDays} 天\n`;
+            message += `已省下：HK$ ${savedMoney} 💰\n`;
+            message += `主要物質：${substance}\n`;
+            message += `打卡次數：${checkinCount} 次\n\n`;
+
+            if (preAssessment) {
+                message += `Pre BARC-10：${preAssessment.date}　得分 ${preAssessment.score} / 60\n`;
+            }
+
+            if (postAssessments && postAssessments.length > 0) {
+                const latest = postAssessments[postAssessments.length - 1];
+                let diffText = '';
+                if (preAssessment) {
+                    const imp = latest.score - preAssessment.score;
+                    diffText = imp > 0 ? `（改善 +${imp} 💚）` : imp < 0 ? `（變化 ${imp} ⚠️）` : `（維持）`;
+                }
+                message += `最新 Post BARC-10：${latest.date}　得分 ${latest.score} / 60 ${diffText}\n`;
+            }
+
+            // 已完成的短期目標
+            message += `\n已完成的7天短期目標：\n`;
+            const completedGoals = shortTermGoals.filter(g => g.completedDays >= 7);
+            if (completedGoals.length === 0) {
+                message += "尚未完成任何7天目標，加油！\n";
+            } else {
+                completedGoals.forEach((g, i) => {
+                    message += `${i+1}. ${g.text} （完成於 ${g.deadline}） - 已完成7天 🎉\n`;
+                });
+            }
+
+            message += `\n你已經走過這麼遠，太厲害了！\n繼續堅持，每一天都在變得更好 🌿💪`;
+
+            alert(message);
+            triggerConfetti(diffDays);
+        }
+
+        // 短期目標功能（支援一次新增多個）
+        function addGoal() {
+            const inputText = document.getElementById('goalInput').value.trim();
+            if (!inputText) return alert("請輸入至少一個目標內容～ 😊");
+
+            const goalsArray = inputText.split('\n').map(g => g.trim()).filter(g => g.length > 0);
+
+            if (goalsArray.length === 0) return alert("請輸入有效目標內容！");
+
+            // 自動設定截止日期為今天 + 7天
+            const today = new Date();
+            const deadlineDate = new Date(today);
+            deadlineDate.setDate(today.getDate() + 7);
+            const deadline = deadlineDate.toISOString().split('T')[0];
+
+            goalsArray.forEach(text => {
+                shortTermGoals.push({
+                    text: text,
+                    deadline: deadline,
+                    completedDays: 0,
+                    lastCompletedDate: null,
+                    created: new Date().toLocaleDateString('zh-HK')
+                });
+            });
+
+            localStorage.setItem('shortTermGoals', JSON.stringify(shortTermGoals));
+            document.getElementById('goalInput').value = '';
+            renderGoals();
+            alert(`已新增 ${goalsArray.length} 個7天目標！截止日期： ${deadline}\n每天點一次「今天完成」即可獲得一顆 🌱`);
+        }
+
+        function markTodayComplete(index) {
+            const goal = shortTermGoals[index];
+            const todayStr = new Date().toLocaleDateString('zh-HK');
+
+            if (goal.lastCompletedDate === todayStr) {
+                alert("今天已經完成過了！明天再來繼續加油 💪");
+                return;
+            }
+
+            if (goal.completedDays < 7) {
+                goal.completedDays += 1;
+                goal.lastCompletedDate = todayStr;
+                localStorage.setItem('shortTermGoals', JSON.stringify(shortTermGoals));
+                renderGoals();
+
+                confetti({ particleCount: 60, spread: 50 });
+                alert(`今天完成！已獲得 ${goal.completedDays} 顆 🌱 繼續保持！`);
+
+                if (goal.completedDays === 7) {
+                    confetti({ particleCount: 150, spread: 90, origin: { y: 0.6 } });
+                    alert("恭喜！7天目標全部完成！🎉🌟 你超棒的！");
+                }
+            } else {
+                alert("這個目標已經完成了7天啦～");
+            }
+        }
+
+        function deleteGoal(index) {
+            if (confirm("確定要刪除這個目標嗎？")) {
+                shortTermGoals.splice(index, 1);
+                localStorage.setItem('shortTermGoals', JSON.stringify(shortTermGoals));
+                renderGoals();
+            }
+        }
+
+        function renderGoals() {
+            const list = document.getElementById('goalList');
+            if (!list) return;
+
+            list.innerHTML = '';
+
+            if (shortTermGoals.length === 0) {
+                list.innerHTML = '<p style="color:#64748b; text-align:center;">暫時沒有短期目標，新增一個開始吧！</p>';
+                return;
+            }
+
+            shortTermGoals.forEach((goal, index) => {
+                const li = document.createElement('li');
+                li.className = 'log-entry';
+
+                const isCompleted = goal.completedDays >= 7;
+
+                li.style.borderLeft = isCompleted ? '6px solid #059669' : '6px solid #8b5cf6';
+                li.style.opacity = isCompleted ? '0.9' : '1';
+
+                // 目標文字
+                const textDiv = document.createElement('div');
+                textDiv.className = 'log-item';
+                if (isCompleted) textDiv.style.textDecoration = 'line-through';
+                textDiv.textContent = goal.text;
+
+                // 只顯示已完成的 🌱
+                const medalDiv = document.createElement('div');
+                medalDiv.style.margin = '8px 0';
+                medalDiv.style.fontSize = '1.6rem';
+                let medals = '';
+                for (let i = 0; i < goal.completedDays; i++) {
+                    medals += '🌱';
+                }
+                medalDiv.innerHTML = medals || '尚未完成任何一天';
+
+                // 按鈕
+                const btnDiv = document.createElement('div');
+                btnDiv.style.marginTop = '8px';
+
+                if (!isCompleted) {
+                    const completeBtn = document.createElement('button');
+                    completeBtn.textContent = '今天完成 +1🌱';
+                    completeBtn.style.background = '#10b981';
+                    completeBtn.style.padding = '8px 16px';
+                    completeBtn.onclick = () => markTodayComplete(index);
+                    btnDiv.appendChild(completeBtn);
+                } else {
+                    const doneText = document.createElement('span');
+                    doneText.textContent = '已完成7天！🎉';
+                    doneText.style.color = '#059669';
+                    doneText.style.fontWeight = 'bold';
+                    btnDiv.appendChild(doneText);
+                }
+
+                const deleteBtn = document.createElement('button');
+                deleteBtn.textContent = '刪除';
+                deleteBtn.style.background = '#ef4444';
+                deleteBtn.style.marginLeft = '12px';
+                deleteBtn.onclick = () => deleteGoal(index);
+                btnDiv.appendChild(deleteBtn);
+
+                li.appendChild(textDiv);
+                li.appendChild(medalDiv);
+                li.appendChild(btnDiv);
+
+                list.appendChild(li);
+            });
+        }
+
+        // PWA 安裝事件監聽
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            if (quitDate) {
+                document.getElementById('installPrompt').style.display = 'block';
+            }
+        });
+
+        document.getElementById('installBtn').addEventListener('click', async () => {
+            if (!deferredPrompt) {
+                alert("安裝教學：\n\nAndroid Chrome：右上 ⋮ → 加到主畫面\niPhone Safari：底部分享圖示 → 加到主畫面\n\n安裝後就能像 App 一樣使用囉！💚");
+                return;
+            }
+
+            deferredPrompt.prompt();
+            const { outcome } = await deferredPrompt.userChoice;
+
+            if (outcome === 'accepted') {
+                confetti({ particleCount: 120, spread: 90, origin: { y: 0.6 } });
+                alert("安裝成功！現在可在主畫面找到「重生一步」 💚\n開啟後即可離線打卡～");
+            }
+
+            deferredPrompt = null;
+            document.getElementById('installPrompt').style.display = 'none';
+        });
+
+        window.addEventListener('appinstalled', () => {
+            console.log('PWA 已安裝');
+            document.getElementById('installPrompt').style.display = 'none';
+        });
+
+        window.onload = function() {
+            if (quitDate) {
+                document.getElementById('quitDate').value = quitDate;
+                updateDays();
+                renderLastCheckin();
+                if (deferredPrompt) {
+                    document.getElementById('installPrompt').style.display = 'block';
+                }
+            } else {
+                document.getElementById('days').textContent = "設定日期開始你的旅程";
+                document.getElementById('days').classList.add('small');
+                document.getElementById('lastCheckinDisplay').textContent = "尚未打卡";
+            }
+            renderLogs();
+            renderMoods();
+            renderReasons();
+            randomQuote();
+            showRandomStory();
+            showDailyGreeting();
+            showDailyReason();
+            renderGoals();
+        };
+
+        // 註冊 Service Worker（放在 onload 之後，讓頁面先載入完成）
+        if ('serviceWorker' in navigator) {
+          window.addEventListener('load', () => {
+            navigator.serviceWorker.register('/service-worker.js')
+              .then(registration => {
+                console.log('Service Worker 註冊成功！範圍：', registration.scope);
+              })
+              .catch(error => {
+                console.error('Service Worker 註冊失敗：', error);
+              });
+          });
+        }
+
+    </script>
+</body>
+</html>

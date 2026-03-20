@@ -1,0 +1,40 @@
+const CACHE_NAME = 'chongsheng-yibu-v1';  // 版本號，改動時更新 v2 v3...
+
+const ASSETS = [
+  '/',
+  '/index.html',
+  'https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js',
+  'https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&display=swap',
+  'https://cdn.dribbble.com/userupload/28408094/file/original-2d218ec59b6594f234706844c71bfba6.gif',
+  'https://i.pinimg.com/originals/18/42/81/184281f0fe87517a950beb8112c308dd.gif',
+  'https://i.pinimg.com/originals/8c/05/8a/8c058a38e30c237a4c687b7122c75076.gif',
+  'https://i.pinimg.com/originals/b0/f6/c0/b0f6c01b567453917292e60eab4c62b5.gif',
+  'https://i.pinimg.com/originals/fb/54/16/fb5416873a8b419858a7175f05b61b60.gif',
+  'https://elfsightcdn.com/platform.js'  // 聊天部分可快取靜態檔
+];
+
+self.addEventListener('install', event => {
+  event.waitUntil(
+    caches.open(CACHE_NAME)
+      .then(cache => cache.addAll(ASSETS))
+  );
+  self.skipWaiting();
+});
+
+self.addEventListener('activate', event => {
+  event.waitUntil(
+    caches.keys().then(keys => Promise.all(
+      keys.filter(key => key !== CACHE_NAME)
+        .map(key => caches.delete(key))
+    ))
+  );
+  self.clients.claim();
+});
+
+self.addEventListener('fetch', event => {
+  event.respondWith(
+    caches.match(event.request)
+      .then(response => response || fetch(event.request))
+      .catch(() => caches.match('/'))  // 離線時回主頁
+  );
+});
